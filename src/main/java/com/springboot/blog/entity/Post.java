@@ -1,11 +1,13 @@
 package com.springboot.blog.entity;
 
-import com.springboot.blog.payload.PostRequestDto;
+import com.springboot.blog.payload.CommentResponseDto;
 import com.springboot.blog.payload.PostResponseDto;
+import com.springboot.blog.payload.PostWithCommentsDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.util.Set;
 
 @Data
@@ -33,5 +35,9 @@ public class Post {
 
     public PostResponseDto toPostDto() {
         return new PostResponseDto(id, title, description, content);
+    }
+
+    public PostWithCommentsDto toPostCommentDto(Set<CommentResponseDto> comments) {
+        return new PostWithCommentsDto(id, title, description, content, comments);
     }
 }

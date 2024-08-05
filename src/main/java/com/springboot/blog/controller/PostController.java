@@ -4,6 +4,7 @@ import com.springboot.blog.exception.ResourceNotFoundException;
 import com.springboot.blog.payload.PostPaginationResponse;
 import com.springboot.blog.payload.PostRequestDto;
 import com.springboot.blog.payload.PostResponseDto;
+import com.springboot.blog.payload.PostWithCommentsDto;
 import com.springboot.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,9 +40,9 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostResponseDto> getPostById(@PathVariable(name = "id") long id) {
+    public ResponseEntity<PostWithCommentsDto> getPostById(@PathVariable(name = "id") long id) {
         try {
-            PostResponseDto post = postService.getPostById(id);
+            PostWithCommentsDto post = postService.getPostById(id);
             return new ResponseEntity<>(post, OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(NOT_FOUND);

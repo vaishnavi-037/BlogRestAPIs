@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostPaginationResponse {
-    private List<PostResponseDto> content;
+    private List<PostWithCommentsDto> content;
     private int pageNo;
     private int pageSize;
     private long totalElements;
