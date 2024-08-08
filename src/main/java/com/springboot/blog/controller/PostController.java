@@ -5,6 +5,7 @@ import com.springboot.blog.payload.PostRequestDto;
 import com.springboot.blog.payload.PostResponseDto;
 import com.springboot.blog.payload.PostWithCommentsDto;
 import com.springboot.blog.service.PostService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,14 +46,14 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<PostResponseDto> createPost(@RequestBody PostRequestDto post) {
+    public ResponseEntity<PostResponseDto> createPost(@Valid @RequestBody PostRequestDto post) {
         PostResponseDto newPost = postService.createPost(post);
         return new ResponseEntity<>(newPost, CREATED);
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostResponseDto> updatePost(@RequestBody PostRequestDto post, @PathVariable(name = "id") long id) {
+    public ResponseEntity<PostResponseDto> updatePost(@Valid @RequestBody PostRequestDto post, @PathVariable(name = "id") long id) {
         PostResponseDto updatedPost = postService.updatePost(post, id);
         return new ResponseEntity<>(updatedPost, OK);
 
