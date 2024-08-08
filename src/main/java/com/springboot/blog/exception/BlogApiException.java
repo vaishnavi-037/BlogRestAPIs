@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+@Getter
 @ResponseStatus(value = NOT_FOUND)
 public class BlogApiException extends RuntimeException {
-    @Getter
     private HttpStatus status;
     private String message;
 
