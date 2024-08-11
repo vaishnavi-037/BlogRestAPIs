@@ -21,11 +21,16 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.disable())
+                .headers(headers -> headers.frameOptions(header -> header.sameOrigin()))
                 .authorizeHttpRequests(
 //                        (authorize) -> authorize.anyRequest().authenticated()
-                        (authorize) -> authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                        (authorize) -> authorize
+                                .requestMatchers("/favicon.ico/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
+
+
         return http.build();
     }
 
