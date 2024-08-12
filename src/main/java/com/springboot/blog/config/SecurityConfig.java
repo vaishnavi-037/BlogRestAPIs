@@ -39,6 +39,7 @@ public class SecurityConfig {
                         (authorize) -> authorize
                                 .requestMatchers("/favicon.ico/**").permitAll()
                                 .requestMatchers("/h2-console/**").permitAll()
+                                .requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
