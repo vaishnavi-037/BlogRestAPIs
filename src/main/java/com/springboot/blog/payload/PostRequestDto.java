@@ -28,6 +28,6 @@ public class PostRequestDto {
     private String content;
 
     public Post toPostEntity() {
-        return new Post(null, title, description, content, new HashSet<>());
+        return new Post(null, title, description, content, new HashSet<>(),null);
     }
 }
