@@ -48,4 +48,9 @@ public class CategoryService {
         Category saveCategory = categoryRepository.save(existingCategory);
         return saveCategory.toCategoryDto();
     }
+
+    public void deleteCategory(Long categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId.toString()));
+        categoryRepository.delete(category);
+    }
 }
