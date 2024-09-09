@@ -7,12 +7,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -30,5 +30,17 @@ public class CategoryController {
     public ResponseEntity<CategoryResponseDto> addCategory(@Valid @RequestBody CategoryRequestDto category) {
         CategoryResponseDto newCategory = categoryService.addCategory(category);
         return new ResponseEntity<>(newCategory, CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryResponseDto> getCategoryById(@PathVariable("id") Long categoryId) {
+        CategoryResponseDto category = categoryService.getCategoryById(categoryId);
+        return new ResponseEntity<>(category, OK);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<CategoryResponseDto>> getAllCategories() {
+        List<CategoryResponseDto> categories = categoryService.getAllCategories();
+        return new ResponseEntity<>(categories, OK);
     }
 }
