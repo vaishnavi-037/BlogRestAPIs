@@ -1,6 +1,7 @@
 package com.springboot.blog.service;
 
 import com.springboot.blog.entity.Category;
+import com.springboot.blog.entity.Post;
 import com.springboot.blog.exception.ResourceNotFoundException;
 import com.springboot.blog.payload.CategoryRequestDto;
 import com.springboot.blog.payload.CategoryResponseDto;
@@ -38,4 +39,13 @@ public class CategoryService {
         return categories.stream().map(category -> category.toCategoryDto()).collect(Collectors.toList());
     }
 
+    public CategoryResponseDto updateCategory(CategoryRequestDto requestCategory, Long categoryId) {
+        Category existingCategory = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId.toString()));
+
+        existingCategory.setName(requestCategory.getName());
+        existingCategory.setDescription(requestCategory.getDescription());
+
+        Category saveCategory = categoryRepository.save(existingCategory);
+        return saveCategory.toCategoryDto();
+    }
 }
