@@ -1,5 +1,6 @@
 package com.springboot.blog.entity;
 
+import com.springboot.blog.payload.CategoryResponseDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,4 +26,7 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> post;
 
+    public CategoryResponseDto toCategoryDto() {
+        return new CategoryResponseDto(id, name, description);
+    }
 }
