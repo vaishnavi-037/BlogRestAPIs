@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.springboot.blog.utils.AppConstants.*;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -67,6 +69,11 @@ public class PostController {
     public ResponseEntity<String> deletePost(@PathVariable(name = "id") long id) {
         postService.deletePost(id);
         return new ResponseEntity<>("Post entity deleted successfully", OK);
+    }
 
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<PostResponseDto>> getPostByCategory(@PathVariable("id") Long categoryId) {
+        List<PostResponseDto> posts = postService.getPostsByCategory(categoryId);
+        return new ResponseEntity<>(posts, OK);
     }
 }

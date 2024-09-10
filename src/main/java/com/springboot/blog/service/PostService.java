@@ -95,4 +95,11 @@ public class PostService {
         Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", String.valueOf(id)));
         postRepository.delete(post);
     }
+
+    public List<PostResponseDto> getPostsByCategory(Long categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId.toString()));
+
+        List<Post> posts = postRepository.findByCategoryId(category.getId());
+        return posts.stream().map(post -> post.toPostDto()).collect(Collectors.toList());
+    }
 }
