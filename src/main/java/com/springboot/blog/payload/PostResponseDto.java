@@ -10,4 +10,5 @@ public class PostResponseDto {
     private String title;
     private String description;
     private String content;
+    private Long categoryId;
 }

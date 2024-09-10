@@ -1,5 +1,6 @@
 package com.springboot.blog.payload;
 
+import com.springboot.blog.entity.Category;
 import com.springboot.blog.entity.Post;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -27,7 +28,9 @@ public class PostRequestDto {
     @NotBlank
     private String content;
 
-    public Post toPostEntity() {
-        return new Post(null, title, description, content, new HashSet<>(),null);
+    private Long categoryId;
+
+    public Post toPostEntity(Category category) {
+        return new Post(null, title, description, content, new HashSet<>(),category);
     }
 }

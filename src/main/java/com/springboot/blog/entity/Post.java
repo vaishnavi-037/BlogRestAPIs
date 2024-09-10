@@ -38,7 +38,7 @@ public class Post {
     private Category category;
 
     public PostResponseDto toPostDto() {
-        return new PostResponseDto(id, title, description, content);
+        return new PostResponseDto(id, title, description, content, category.getId());
     }
 
     public PostWithCommentsDto toPostCommentDto(Set<CommentResponseDto> comments) {

@@ -1,9 +1,11 @@
 package com.springboot.blog.service;
 
+import com.springboot.blog.entity.Category;
 import com.springboot.blog.entity.Comment;
 import com.springboot.blog.entity.Post;
 import com.springboot.blog.exception.ResourceNotFoundException;
 import com.springboot.blog.payload.*;
+import com.springboot.blog.repository.CategoryRepository;
 import com.springboot.blog.repository.CommentRepository;
 import com.springboot.blog.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +25,23 @@ public class PostService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
 
+    private final CategoryRepository categoryRepository;
+
     // we can omit @Autowired because it has only 1 param. From spring 4.3 onwards, if a class is configured as a spring bean and it has only one constructor,
     // then we can omit the @Autowired annotation
     @Autowired
-    public PostService(PostRepository postRepository, CommentRepository commentRepository) {
+    public PostService(PostRepository postRepository, CommentRepository commentRepository, CategoryRepository categoryRepository) {
         this.postRepository = postRepository;
         this.commentRepository = commentRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     public PostResponseDto createPost(PostRequestDto requestPost) {
-        Post post = requestPost.toPostEntity();
+        Category category = categoryRepository.findById(requestPost.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category", "id", requestPost.getCategoryId().toString()));
+
+        Post post = requestPost.toPostEntity(category);
         Post savePost = postRepository.save(post);
+
         return savePost.toPostDto();
     }
 
@@ -72,10 +80,12 @@ public class PostService {
 
     public PostResponseDto updatePost(PostRequestDto requestPost, long id) {
         Post existingPost = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", String.valueOf(id)));
+        Category category = categoryRepository.findById(requestPost.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category", "id", requestPost.getCategoryId().toString()));
 
         existingPost.setTitle(requestPost.getTitle());
         existingPost.setDescription(requestPost.getDescription());
         existingPost.setContent(requestPost.getContent());
+        existingPost.setCategory(category);
 
         Post savePost = postRepository.save(existingPost);
         return savePost.toPostDto();
