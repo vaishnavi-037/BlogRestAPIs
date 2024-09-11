@@ -3,6 +3,7 @@ package com.springboot.blog.controller;
 import com.springboot.blog.payload.CommentRequestDto;
 import com.springboot.blog.payload.CommentResponseDto;
 import com.springboot.blog.service.CommentService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class CommentController {
         this.commentService = commentService;
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("posts/{postId}/comments")
     public ResponseEntity<CommentResponseDto> createComment(@PathVariable(value = "postId") Long postId,
                                                             @Valid @RequestBody CommentRequestDto comment) {

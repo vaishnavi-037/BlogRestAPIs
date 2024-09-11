@@ -5,6 +5,7 @@ import com.springboot.blog.payload.PostRequestDto;
 import com.springboot.blog.payload.PostResponseDto;
 import com.springboot.blog.payload.PostWithCommentsDto;
 import com.springboot.blog.service.PostService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,7 @@ public class PostController {
 
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<PostResponseDto> createPost(@Valid @RequestBody PostRequestDto post) {
@@ -56,6 +58,7 @@ public class PostController {
 
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<PostResponseDto> updatePost(@Valid @RequestBody PostRequestDto post, @PathVariable(name = "id") long id) {
@@ -64,6 +67,7 @@ public class PostController {
 
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePost(@PathVariable(name = "id") long id) {
