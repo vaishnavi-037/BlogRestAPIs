@@ -4,6 +4,7 @@ import com.springboot.blog.payload.CategoryRequestDto;
 import com.springboot.blog.payload.CategoryResponseDto;
 import com.springboot.blog.service.CategoryService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/api/categories")
+@Tag(name = "CRUD REST APIs for Category Resource")
 public class CategoryController {
 
     private final CategoryService categoryService;
