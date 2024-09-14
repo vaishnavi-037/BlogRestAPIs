@@ -102,4 +102,9 @@ public class PostService {
         List<Post> posts = postRepository.findByCategoryId(category.getId());
         return posts.stream().map(post -> post.toPostDto()).collect(Collectors.toList());
     }
+
+    public List<PostResponseDto> searchPosts(String query){
+        List<Post> searchedPosts = postRepository.searchPosts(query);
+        return searchedPosts.stream().map(post -> post.toPostDto()).collect(Collectors.toList());
+    }
 }
